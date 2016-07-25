@@ -1,0 +1,217 @@
+.light-blue-button, .light-blue-button:active, .light-blue-button:hover{
+	background-color: #7acce3 !important;
+	color: #474747;
+	border:0px;
+}
+.light-grey-button, .light-grey-button:active, .light-grey-button:hover{
+	background-color: #efefef !important;
+	color: #474747 !important;
+	border:0px;
+}
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  /* bring your own prefixes */
+  transform: translate(-50%, -50%);
+}
+.center-align {
+	text-align: center;
+}
+/*
+	OVERWRITE IONIC STYLES
+*/
+.bar-header {
+   height: 70px !important; /*just an example*/
+   background-color: #efefef;
+}
+.bar-header .title {
+   line-height: 70px !important;
+}
+.has-header {
+   top: 70px !important;
+}
+.bar { background-image: none !important; }
+/*
+	HEADER BAR
+*/
+.header-cart {
+	font-size: 35px;
+	color: #474747;
+}
+.header-badge{
+  position: absolute !important; 
+  top: 0px !important;
+  right: 0px !important;
+  font-size: 14px;
+}
+.header-logo {
+	height: 50px;
+}
+/*
+	SPLASH PAGE
+*/
+#splash-bg {
+  min-height: 100%;
+  min-width: 1200px;
+  width: 100%;
+  height: auto;
+  position: fixed;
+  top: 0;
+  left: 0;   
+}
+#splash-logo {
+	max-width: 100%;
+}
+#splash-container {
+  position: absolute;
+  left: 0%;
+  width: 100%;
+  color: #ffffff;
+}
+#splash-page .light-blue-button {
+	max-width: 100%;
+	font-size: 14px;
+	margin-top: 30px;
+}
+/*
+	HOME PAGE
+*/
+#home-page h4{
+	color: #474747;
+	padding: 9px;
+}
+.home-genre-item {
+	border: 0px;
+	min-height: 17vh;
+	color: #ffffff !important;
+	text-align: center;
+	font-size: 26px;
+	line-height: 11vh !important;
+	font-weight: bold;
+}
+#list-fruits {
+	background: url("../img/Fruits/Apricots (2) - Pixabay.jpg") no-repeat center center fixed; 
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+#list-vegetables {
+	background: url("../img/Vegetables/Beets (2) - Pixabay.jpg") no-repeat center center fixed; 
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+#list-meats {
+	background: url("../img/Meat/Beef (2) - Pixabay.jpg") no-repeat center center fixed; 
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+#list-other {
+	background: url("../img/Other/Eggs - Unsplash.jpeg") no-repeat center center fixed; 
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+#list-farms {
+	background: url("../img/Farm/Field (5) - Pixabay.jpg") no-repeat center center fixed; 
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+/*
+	GENRE PAGE
+*/
+.genre-header-container {
+	width: 100%;
+	height: 150px;
+	overflow-y: hidden;
+	position: relative;
+	margin-bottom:3px;;
+}
+.genre-header-container p{
+	margin: 0;
+	color:#ffffff;
+	font-size: 24px;
+	font-weight: bold;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+}
+.genre-header-container .genre-back-button {
+	margin: 0;
+	color:#ffffff;
+	font-size: 30px;
+	font-weight: bold;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    /*margin-right: -50%;*/
+    /*transform: translate(-50%, -50%)*/
+}
+.genre-header-img {
+	width: 100%;
+	margin-top: -50px;
+}
+
+.genre-product-container{
+	width: 47vw;
+	height: 47vw;
+	margin-left: 2vw;
+	margin-top: 1vw;
+	display: inline-block;
+	height: 150px;
+	overflow-y: hidden;
+	position: relative;
+	padding:0px;
+	border:0px;
+}
+.genre-product-img {
+	width: 100%;
+	min-height: 100%;
+	/*margin-top: -50px;*/
+}
+.genre-product-container p{
+	margin: 0;
+	color:#ffffff;
+	font-size: 20px;
+	font-weight: bold;
+    position: absolute;
+    bottom: 5%;
+    left: 50%;
+    height: 24px;
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+}
+.genre-product-check {
+	margin: 0;
+	color:#32cd32;
+	font-size: 40px;
+	font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    height: 24px;
+    z-index: 100;
+    /*margin-right: -50%;*/
+    /*transform: translate(-50%, -50%)*/
+}
+@media screen and (max-width: 800px) { /* Specific to this particular image */
+  #splash-bg {
+    left: 50%;
+    margin-left: -600px;
+    -webkit-transform: rotate(90deg);
+    -moz-transform: rotate(90deg);
+    -ms-transform: rotate(90deg);
+    -o-transform: rotate(90deg);
+    transform: rotate(90deg);
+  }
+}

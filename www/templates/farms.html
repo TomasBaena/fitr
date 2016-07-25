@@ -1,0 +1,38 @@
+<ion-view>
+    <ion-nav-bar class="nav-style">>
+    </ion-nav-bar>
+        <ion-nav-buttons side="left">
+      <a href="#/splash" class="button button-icon">
+        <img class="header-logo" src="img/Logo - FITR - July12 black.png">
+      </a>
+    </ion-nav-buttons>
+    <ion-nav-title>
+    </ion-nav-title>
+    <ion-nav-buttons side="right">
+      <button class="button button-icon" ng-click="search()">
+        <i class="header-cart ion-android-cart"></i>
+        <span class="badge badge-assertive header-badge">5</span>
+      </button>
+    </ion-nav-buttons>
+  <ion-content id="home-page">
+    <div class="genre-header-container">
+      <a href="#/home" class="button button-icon genre-back-button">
+        <i class="ion-chevron-left"></i>
+      </a>
+      <img class="genre-header-img" src="img/Farm/Farm - Haybails - Unsplash.jpg">
+      <p>Farms</p>
+    </div>
+    Coming Soon
+<!--     <div class="list">
+      <a class="item genre-product-container" ng-repeat="product in products track by $index" ng-click="selectProduct($index)">
+        <img class="genre-product-img" src={{product.img}}>
+        <p>{{product.name}}</p>
+        <i ng-show="product.selected" class="genre-product-check ion-ios-checkmark"></i>
+      </a>
+    </div> -->
+    <div class="row">
+      <a href="#/home" class="button icon-left ion-chevron-left button-calm light-grey-button col col-33">Back</a>
+      <a class="button icon-right ion-chevron-up button-calm light-grey-button col col-33 col-offset-33" ng-click="scrollToTop()">Top</a>
+    </div>
+  </ion-content>
+</ion-view>
