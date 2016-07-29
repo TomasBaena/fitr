@@ -1,17 +1,17 @@
 <ion-view>
-    <ion-nav-bar class="nav-style">>
+    <ion-nav-bar>
     </ion-nav-bar>
         <ion-nav-buttons side="left">
-      <a href="#/splash" class="button button-icon">
+      <a href="#/home" class="button button-icon">
         <img class="header-logo" src="img/Logo - FITR - July12 black.png">
       </a>
     </ion-nav-buttons>
     <ion-nav-title>
     </ion-nav-title>
     <ion-nav-buttons side="right">
-      <button class="button button-icon" ng-click="search()">
-        <i class="header-cart ion-android-cart"></i>
-        <span class="badge badge-assertive header-badge">5</span>
+      <button class="button button-icon" ng-click="gotoCart()">
+        <i class="header-cart ion-ios-home-outline"></i>
+        <span ng-show="cart.length>0" class="badge badge-assertive header-badge">{{cart.length}}</span>
       </button>
     </ion-nav-buttons>
   <ion-content id="home-page">
@@ -24,16 +24,17 @@
     </div>
     <div class="list">
       <a class="item genre-product-container" ng-repeat="product in products track by $index" ng-click="selectProduct($index)">
-        <img class="genre-product-img" src={{product.img}}>
+        <img ng-show="!mobile" class="genre-product-img" src={{product.img_lrg}}>
+        <img ng-show="mobile" class="genre-product-img" src={{product.img}}>
         <p>{{product.name}}</p>
         <!-- <img style="width:30px;height:30px;" src="img/ionic.png" ng-show="product.selected" class="genre-product-check ion-ios-checkmark"> -->
         <i ng-show="product.selected" class="genre-product-check ion-ios-checkmark"></i>
       </a>
     </div>
-    <div class="row">
-      <a href="#/home" class="button icon-left ion-chevron-left button-calm light-grey-button col col-33">Back</a>
-      <a class="button icon-right ion-chevron-up button-calm light-grey-button col col-33 col-offset-33" ng-click="scrollToTop()">Top</a>
+    <div class="button-bar">
+      <a href="#/home" class="button icon-left ion-chevron-left button-calm light-blue-button" style="margin:2px;" >Back</a>
+      <button class="button icon ion-chevron-up button-calm light-blue-button" style="margin:2px;" ng-click="scrollToTop()"></button>
+      <a class="button icon-right ion-chevron-right button-calm light-blue-button" style="margin:2px;" ng-click="gotoCart()">Farms</a>
     </div>
-
   </ion-content>
 </ion-view>

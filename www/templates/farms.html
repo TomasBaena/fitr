@@ -1,17 +1,17 @@
 <ion-view>
-    <ion-nav-bar class="nav-style">>
+    <ion-nav-bar>
     </ion-nav-bar>
         <ion-nav-buttons side="left">
-      <a href="#/splash" class="button button-icon">
+      <a href="#/home" class="button button-icon">
         <img class="header-logo" src="img/Logo - FITR - July12 black.png">
       </a>
     </ion-nav-buttons>
     <ion-nav-title>
     </ion-nav-title>
     <ion-nav-buttons side="right">
-      <button class="button button-icon" ng-click="search()">
-        <i class="header-cart ion-android-cart"></i>
-        <span class="badge badge-assertive header-badge">5</span>
+      <button class="button button-icon" ng-click="gotoCart()">
+        <i class="header-cart ion-ios-home-outline"></i>
+        <span ng-show="cart.length>0" class="badge badge-assertive header-badge">{{cart.length}}</span>
       </button>
     </ion-nav-buttons>
   <ion-content id="home-page">
@@ -19,20 +19,81 @@
       <a href="#/home" class="button button-icon genre-back-button">
         <i class="ion-chevron-left"></i>
       </a>
-      <img class="genre-header-img" src="img/Farm/Farm - Haybails - Unsplash.jpg">
+      <img class="genre-header-img" src="img/Farm/farm2.jpg">
       <p>Farms</p>
     </div>
-    Coming Soon
-<!--     <div class="list">
-      <a class="item genre-product-container" ng-repeat="product in products track by $index" ng-click="selectProduct($index)">
-        <img class="genre-product-img" src={{product.img}}>
-        <p>{{product.name}}</p>
-        <i ng-show="product.selected" class="genre-product-check ion-ios-checkmark"></i>
-      </a>
-    </div> -->
-    <div class="row">
-      <a href="#/home" class="button icon-left ion-chevron-left button-calm light-grey-button col col-33">Back</a>
-      <a class="button icon-right ion-chevron-up button-calm light-grey-button col col-33 col-offset-33" ng-click="scrollToTop()">Top</a>
+    <div class="list">
+      <div class="item item-thumbnail-left farm-container" ng-repeat="farm in farms track by $index" ng-click="addToCart($index)">
+        <!-- <img class="genre-product-img" src={{farm.img}}> -->
+        <!-- <div class="item item-thumbnail-left"> -->
+          <img class="farm-img" src="img/Farm/Farm - Haybails - Unsplash.jpg">
+          <h3>{{farm.Name}}</h3>
+          <p>
+          <i class="ion-ios-location-outline"></i><span ng-click="openMaps($index)" style="color:#1e90ff;font-size:12px;"> {{farm['Address']}} ({{farm['Distance (km)']}})</span><br>
+          <i class="ion-ios-clock-outline"></i><span style="color:#474747;font-size:12px;"> {{farm.hours}}</span><br>
+          <i class="ion-ios-telephone-outline"></i>
+          <a style="text-decoration:none;" href={{farm.call}}><span style="color:#1e90ff;font-size:12px;">{{farm.Phone}}</span></a>
+
+          </p>
+          <div class="outter-farm-product-container">
+           <a ng-show="farm['FARM TOTALS']>3" class="button button-icon icon ion-chevron-left scroll-button-left" ng-click="scrollLeft($index);"></a>
+            <div id="farm-product-container-{{$index}}" class="farm-product-container">
+                <img ng-show="farm['Apples']=='Y'" ng-class="{border: searchList.indexOf('Apples')>-1}" class="product-preview" src="img/fruit/apples.jpg">
+                <img ng-show="farm['Apricots']=='Y'" ng-class="{border: searchList.indexOf('Apricots')>-1}" class="product-preview" src="img/fruit/apricots.jpg">
+                <img ng-show="farm['Blueberries']=='Y'" ng-class="{border: searchList.indexOf('Blueberries')>-1}" class="product-preview" src="img/fruit/blueberries.jpg">
+                <img ng-show="farm['Fruit Juices']=='Y'" ng-class="{border: searchList.indexOf('Fruit Juices')>-1}" class="product-preview" src="img/fruit/fruit_juice.jpg">
+                <img ng-show="farm['Nectarines']=='Y'" ng-class="{border: searchList.indexOf('Nectarines')>-1}" class="product-preview" src="img/fruit/nectarines.jpg">
+                <img ng-show="farm['Peaches']=='Y'" ng-class="{border: searchList.indexOf('Peaches')>-1}" class="product-preview" src="img/fruit/peaches.jpg">
+                <img ng-show="farm['Pears']=='Y'" ng-class="{border: searchList.indexOf('Pears')>-1}" class="product-preview" src="img/fruit/pears.jpg">
+                <img ng-show="farm['Plums']=='Y'" ng-class="{border: searchList.indexOf('Plums')>-1}" class="product-preview" src="img/fruit/plums.jpg">
+                <img ng-show="farm['Raspberries']=='Y'" ng-class="{border: searchList.indexOf('Raspberries')>-1}" class="product-preview" src="img/fruit/raspberries.jpg">
+                <img ng-show="farm['Strawberries']=='Y'" ng-class="{border: searchList.indexOf('Strawberries)>-1}" class="product-preview" src="img/fruit/strawberries.jpg">
+                <img ng-show="farm['Watermelon']=='Y'" ng-class="{border: searchList.indexOf('Watermelon')>-1}" class="product-preview" src="img/fruit/watermelon.jpg">
+                <img ng-show="farm['Beans']=='Y'" ng-class="{border: searchList.indexOf('Beans')>-1}" class="product-preview" src="img/vegetables/beans.jpg">
+                <img ng-show="farm['Beets']=='Y'" ng-class="{border: searchList.indexOf('Beets')>-1}" class="product-preview" src="img/vegetables/beets.jpg">
+                <img ng-show="farm['Carrots']=='Y'" ng-class="{border: searchList.indexOf('Carrots')>-1}" class="product-preview" src="img/vegetables/carrots.jpg">
+                <img ng-show="farm['Corn']=='Y'" ng-class="{border: searchList.indexOf('Corn')>-1}" class="product-preview" src="img/vegetables/corns.jpg">
+                <img ng-show="farm['Cucumber']=='Y'" ng-class="{border: searchList.indexOf('Cucumber')>-1}" class="product-preview" src="img/vegetables/cucumbers.jpg">
+                <img ng-show="farm['Eggplant']=='Y'" ng-class="{border: searchList.indexOf('Eggplant')>-1}" class="product-preview" src="img/vegetables/eggplants.jpg">
+                <img ng-show="farm['Garlic']=='Y'" ng-class="{border: searchList.indexOf('Garlic')>-1}" class="product-preview" src="img/vegetables/garlic.jpg">
+                <img ng-show="farm['Kale']=='Y'" ng-class="{border: searchList.indexOf('Kale')>-1}" class="product-preview" src="img/vegetables/kale.jpg">
+                <img ng-show="farm['Onions (green)']=='Y'" ng-class="{border: searchList.indexOf('Onions (green)')>-1}" class="product-preview" src="img/vegetables/onions_green.jpg">
+                <img ng-show="farm['Onions (red)']=='Y'" ng-class="{border: searchList.indexOf('Onions (red)')>-1}" class="product-preview" src="img/vegetables/onion_red.jpg">
+                <img ng-show="farm['Peas (green)']=='Y'" ng-class="{border: searchList.indexOf('Peas (green)')>-1}" class="product-preview" src="img/vegetables/peas.jpg">
+                <img ng-show="farm['Peas (snow)']=='Y'" ng-class="{border: searchList.indexOf('Peas (snow)')>-1}" class="product-preview" src="img/vegetables/snow_peas.jpg">
+                <img ng-show="farm['Peppers']=='Y'" ng-class="{border: searchList.indexOf('Peppers')>-1}" class="product-preview" src="img/vegetables/red_pepper.jpg">
+                <img ng-show="farm['Potatoes']=='Y'" ng-class="{border: searchList.indexOf('Potatoes')>-1}" class="product-preview" src="img/vegetables/potatoes.jpg">
+                <img ng-show="farm['Pumpkin']=='Y'" ng-class="{border: searchList.indexOf('Pumpkin')>-1}" class="product-preview" src="img/vegetables/pumpkins.jpg">
+                <img ng-show="farm['Squash']=='Y'" ng-class="{border: searchList.indexOf('Squash')>-1}" class="product-preview" src="img/vegetables/squash.jpg">
+                <img ng-show="farm['Tomatoes']=='Y'" ng-class="{border: searchList.indexOf('Tomatoes')>-1}" class="product-preview" src="img/vegetables/tomatoes.jpg">
+                <img ng-show="farm['Zucchini']=='Y'" ng-class="{border: searchList.indexOf('Zucchini')>-1}" class="product-preview" src="img/vegetables/zucchini.jpg">
+                <img ng-show="farm['Apple Cider']=='Y'" ng-class="{border: searchList.indexOf('Apple Cider')>-1}" class="product-preview" src="img/others/apple_cider.jpg">
+                <img ng-show="farm['Beer']=='Y'" ng-class="{border: searchList.indexOf('Beer')>-1}" class="product-preview" src="img/others/beer.jpg">
+                <img ng-show="farm['Cheese']=='Y'" ng-class="{border: searchList.indexOf('Cheese')>-1}" class="product-preview" src="img/others/cheese.jpg">
+                <img ng-show="farm['Eggs']=='Y'" ng-class="{border: searchList.indexOf('Eggs')>-1}" class="product-preview" src="img/others/eggs.jpg">
+                <img ng-show="farm['Honey']=='Y'" ng-class="{border: searchList.indexOf('Honey')>-1}" class="product-preview" src="img/others/honey.jpg">
+                <img ng-show="farm['Jams']=='Y'" ng-class="{border: searchList.indexOf('Jams')>-1}" class="product-preview" src="img/others/jams.jpg">
+                <img ng-show="farm['Maple Syrup']=='Y'" ng-class="{border: searchList.indexOf('Maple Syrup')>-1}" class="product-preview" src="img/others/maple.jpg">
+                <img ng-show="farm['Wine']=='Y'" ng-class="{border: searchList.indexOf('Wine')>-1}" class="product-preview" src="img/others/wine.jpg">
+                <img ng-show="farm['Beef']=='Y'" ng-class="{border: searchList.indexOf('Beef')>-1}" class="product-preview" src="img/meat/beef.jpg">
+                <img ng-show="farm['Chicken']=='Y'" ng-class="{border: searchList.indexOf('Chicken')>-1}" class="product-preview" src="img/meat/chicken.jpg">
+                <img ng-show="farm['Fish']=='Y'" ng-class="{border: searchList.indexOf('Fish')>-1}" class="product-preview" src="img/meat/fish.jpg">
+                <img ng-show="farm['Lamb']=='Y'" ng-class="{border: searchList.indexOf('Lamb')>-1}" class="product-preview" src="img/meat/lamb.jpg">
+                <img ng-show="farm['Pork']=='Y'" ng-class="{border: searchList.indexOf('Pork')>-1}" class="product-preview" src="img/meat-md/pork.jpg">
+                <img ng-show="farm['Sausage']=='Y'" ng-class="{border: searchList.indexOf('Sausage')>-1}" class="product-preview" src="img/meat/sausages.jpg">
+                <img ng-show="farm['Turkey']=='Y'" ng-class="{border: searchList.indexOf('Turkey')>-1}" class="product-preview" src="img/meat/turkey.jpg">
+            </div>
+            <a ng-show="farm['FARM TOTALS']>3" class="button button-icon icon ion-chevron-right scroll-button-right" ng-click="scrollRight($index);"></a>
+          </div>
+          <i ng-show="farm.selected" class="genre-product-check ion-ios-checkmark"></i>
+          <i ng-show="!farm.selected" class="genre-product-x ion-ios-close"></i>
+
+      </div>
+    </div>
+    <div class="button-bar">
+      <a href="#/home" class="button icon-left ion-chevron-left button-calm light-blue-button" style="margin:2px;" >Back</a>
+      <button class="button icon ion-chevron-up button-calm light-blue-button" style="margin:2px;" ng-click="scrollToTop()"></button>
+      <a class="button icon-right ion-chevron-right button-calm light-blue-button" style="margin:2px;" ng-click="gotoCart()">Farms</a>
     </div>
   </ion-content>
 </ion-view>

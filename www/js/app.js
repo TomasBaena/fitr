@@ -20,13 +20,29 @@ angular.module('starter', ['ionic','starter.controllers','starter.services'])
     if(window.StatusBar) {
       StatusBar.styleDefault();
     }
+    // if(typeof analytics !== undefined) {
+    //   analytics.startTrackerWithId("UA-XXXXXXXX-XX");
+    // } else {
+    //   console.log("Google Analytics Unavailable");
+    // }
   });
 })
-
+.directive('ngClick', function() {
+    return {
+        restrict: 'A',
+        compile: function($element, attr) {
+            return function(scope, element, attr) {
+                element.on('click', function(event) {
+                    event.stopPropagation();
+                });
+            };
+        }
+    }
+})
 .config(function($ionicConfigProvider,$stateProvider,$urlRouterProvider) {
   $ionicConfigProvider.navBar.alignTitle("center");
   $ionicConfigProvider.backButton.text('Back').icon('ion-chevron-left');
-  $urlRouterProvider.otherwise('/home')
+  $urlRouterProvider.otherwise('/splash')
   $stateProvider
   .state('splash', {
     url: '/splash',
@@ -39,9 +55,14 @@ angular.module('starter', ['ionic','starter.controllers','starter.services'])
     controller: 'HomeCtrl'
   })
   .state('farm', {
-    url: '/Farms',
+    url: '/farms',
     templateUrl: 'templates/farms.html',
     controller: 'FarmCtrl'
+  })
+  .state('cart', {
+    url: '/cart',
+    templateUrl: 'templates/cart.html',
+    controller: 'CartCtrl'
   })
   .state('genre', {
     url: '/home/:genre',

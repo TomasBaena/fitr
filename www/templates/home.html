@@ -1,5 +1,5 @@
 <ion-view>
-    <ion-nav-bar class="nav-style">>
+    <ion-nav-bar>
     </ion-nav-bar>
         <ion-nav-buttons side="left">
       <a href="#/splash" class="button button-icon">
@@ -9,29 +9,32 @@
     <ion-nav-title>
     </ion-nav-title>
     <ion-nav-buttons side="right">
-      <button class="button button-icon" ng-click="search()">
-        <i class="header-cart ion-android-cart"></i>
-        <span class="badge badge-assertive header-badge">5</span>
+      <button class="button button-icon" ng-click="gotoCart()">
+        <i class="header-cart ion-ios-home-outline"></i>
+        <span ng-show="cart.length>0" class="badge badge-assertive header-badge">{{cart.length}}</span>
       </button>
     </ion-nav-buttons>
   <ion-content id="home-page">
     <h4>Explore local farms and unearth goodness.</h4>
-    <div class="list">
-      <a id="list-fruits" class="item home-genre-item" href="#/home/Fruits">
-        Fruits
+      <a class="home-genre-item" href="#/home/Fruits">
+        <img class="genre-header-img" src="img/fruit-md/apricots.jpg">
+        <p>Fruits</p>
       </a>
-      <a id="list-vegetables" class="item home-genre-item" href="#/home/Vegetables">
-        Vegetables
+      <a class="home-genre-item" href="#/home/Vegetables">
+        <img class="genre-header-img" src="img/vegetables-md/beets.jpg">
+        <p>Vegetables</p>
       </a>
-      <a id="list-meats" class="item home-genre-item" href="#/home/Meats">
-        Meats
+      <a class="home-genre-item" href="#/home/Meats">
+        <img class="genre-header-img" src="img/meat-md/beef.jpg">
+        <p>Meats</p>
       </a>
-      <a id="list-other" class="item home-genre-item" href="#/home/Other">
-        Other
+      <a class="home-genre-item" href="#/home/Other">
+        <img class="genre-header-img" src="img/others-md/eggs2.jpg">
+        <p>Other</p>
       </a>
-      <a id="list-farms" class="item home-genre-item" href="#/Farms">
-        Farms
+      <a class="home-genre-item" href="#/farms">
+        <img class="genre-header-img" src="img/Farm/farm.jpg">
+        <p>Farms</p>
       </a>
-    </div>
   </ion-content>
 </ion-view>

@@ -1,3 +1,7 @@
+
+body {
+	font-family: 'Lato', sans-serif !important;
+}
 .light-blue-button, .light-blue-button:active, .light-blue-button:hover{
 	background-color: #7acce3 !important;
 	color: #474747;
@@ -17,6 +21,9 @@
 }
 .center-align {
 	text-align: center;
+}
+.border {
+	border: 3px solid #7acce3;
 }
 /*
 	OVERWRITE IONIC STYLES
@@ -41,7 +48,7 @@
 }
 .header-badge{
   position: absolute !important; 
-  top: 0px !important;
+  top: 4px !important;
   right: 0px !important;
   font-size: 14px;
 }
@@ -58,7 +65,8 @@
   height: auto;
   position: fixed;
   top: 0;
-  left: 0;   
+  left: 0;  
+  z-index: -1; 
 }
 #splash-logo {
 	max-width: 100%;
@@ -77,65 +85,35 @@
 /*
 	HOME PAGE
 */
+#home-page {
+	/*overflow:  scroll;*/
+
+}
 #home-page h4{
 	color: #474747;
-	padding: 9px;
-}
-.home-genre-item {
-	border: 0px;
-	min-height: 17vh;
-	color: #ffffff !important;
-	text-align: center;
-	font-size: 26px;
-	line-height: 11vh !important;
+	padding: 5px;
+	font-family: 'Caveat', cursive;
+	font-size: 24px;
 	font-weight: bold;
 }
-#list-fruits {
-	background: url("../img/Fruits/Apricots (2) - Pixabay.jpg") no-repeat center center fixed; 
-	-webkit-background-size: cover;
-	-moz-background-size: cover;
-	-o-background-size: cover;
-	background-size: cover;
-}
-#list-vegetables {
-	background: url("../img/Vegetables/Beets (2) - Pixabay.jpg") no-repeat center center fixed; 
-	-webkit-background-size: cover;
-	-moz-background-size: cover;
-	-o-background-size: cover;
-	background-size: cover;
-}
-#list-meats {
-	background: url("../img/Meat/Beef (2) - Pixabay.jpg") no-repeat center center fixed; 
-	-webkit-background-size: cover;
-	-moz-background-size: cover;
-	-o-background-size: cover;
-	background-size: cover;
-}
-#list-other {
-	background: url("../img/Other/Eggs - Unsplash.jpeg") no-repeat center center fixed; 
-	-webkit-background-size: cover;
-	-moz-background-size: cover;
-	-o-background-size: cover;
-	background-size: cover;
-}
-#list-farms {
-	background: url("../img/Farm/Field (5) - Pixabay.jpg") no-repeat center center fixed; 
-	-webkit-background-size: cover;
-	-moz-background-size: cover;
-	-o-background-size: cover;
-	background-size: cover;
-}
-/*
-	GENRE PAGE
-*/
-.genre-header-container {
+a.home-genre-item {
 	width: 100%;
-	height: 150px;
+	max-height: 150px;
 	overflow-y: hidden;
 	position: relative;
-	margin-bottom:3px;;
+	margin-bottom:8px;
+	display: block;
 }
-.genre-header-container p{
+.home-genre-item img{
+	width: 100%;
+	display: block;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+	top: 50%;
+	transform: translateY(-50%);
+}
+.home-genre-item p{
 	margin: 0;
 	color:#ffffff;
 	font-size: 24px;
@@ -146,21 +124,91 @@
     margin-right: -50%;
     transform: translate(-50%, -50%)
 }
+#list-fruits img{
+	background: url("../img/fruit-md/apricots.jpg") no-repeat center center fixed; 
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+#list-vegetables {
+	background: url("../img/vegetables-md/beets.jpg") no-repeat center bottom fixed; 
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+#list-meats {
+	background: url("../img/meat-md/beef.jpg") no-repeat center top fixed; 
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+#list-other {
+	background: url("../img/others-md/eggs2.jpg") no-repeat center top fixed; 
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+#list-farms {
+	background: url("../img/Farm/farm.jpg") no-repeat center center fixed; 
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	display: block;
+}
+/*
+	GENRE PAGE
+*/
+.genre-header-container {
+	width: 100%;
+	height: 150px;
+	overflow-y: hidden;
+	position: relative;
+	margin-bottom:3px;;
+	display: block;
+}
+.genre-header-container p{
+	margin: 0;
+	color:#ffffff;
+	font-size: 24px;
+	font-weight: bold;
+    position: absolute;
+    top: 50%;
+    /*left: 50%;*/
+    /*margin-right: -50%;*/
+    transform: translate(0%, -50%)
+    z-index:11;
+    width: 100%;
+    text-align: center;
+}
+.genre-header-img {
+	width: 100%;
+	min-height: 100%;
+	display: block;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+	top: 50%;
+	transform: translateY(-50%);	/*margin-top: -50px;*/
+	z-index: -1;
+}
 .genre-header-container .genre-back-button {
 	margin: 0;
 	color:#ffffff;
-	font-size: 30px;
+	font-size: 24px;
 	font-weight: bold;
     position: absolute;
     top: 0%;
     left: 0%;
-    /*margin-right: -50%;*/
-    /*transform: translate(-50%, -50%)*/
+    margin-right: -50%;
+    transform: translate(-50%, -50%)
+    z-index:12;
 }
-.genre-header-img {
-	width: 100%;
-	margin-top: -50px;
-}
+
 
 .genre-product-container{
 	width: 47vw;
@@ -177,7 +225,9 @@
 .genre-product-img {
 	width: 100%;
 	min-height: 100%;
-	/*margin-top: -50px;*/
+	position: relative;
+	top: 50%;
+	transform: translateY(-50%);
 }
 .genre-product-container p{
 	margin: 0;
@@ -204,7 +254,219 @@
     /*margin-right: -50%;*/
     /*transform: translate(-50%, -50%)*/
 }
-@media screen and (max-width: 800px) { /* Specific to this particular image */
+.genre-product-x {
+	margin: 0;
+	color:#efefef;
+	font-size: 40px;
+	font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    height: 24px;
+    z-index: 100;
+    /*margin-right: -50%;*/
+    /*transform: translate(-50%, -50%)*/
+}
+/*
+	FARM PAGE
+*/
+.farm-container{
+	position: relative;
+	border:0px;
+}
+.outter-farm-product-container {
+	max-width:400px;
+    height:50px;
+    overflow-x:hidden;
+    overflow-y: hidden;
+    /*white-space: nowrap;*/
+    padding-left: 25px;
+    padding-right: 25px;
+    position: relative;
+}
+.farm-product-container {
+	width:100%;
+	margin-left: 0px;
+	margin-right: 0px;
+    height:50px;
+    overflow-x:scroll; /* comment for desktop */
+    overflow-y: hidden;
+    white-space: nowrap;
+/*    padding-left: 25px;
+    padding-right: 25px;*/
+    position: relative;
+}
+.scroll-button-left{
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #ffffff !important;
+    color: #262626 !important;
+    /*float: left;*/
+    z-index:12;
+}
+.scroll-button-right{
+    position: absolute;
+    top: 0;
+  	right: 0;
+    background-color: #ffffff !important;
+    color: #262626 !important;
+    /*float: left;*/
+    z-index:12;
+}
+/*.outer-farm-container {*/
+	/*max-width: 50%;*/
+/*	overflow-x:scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+    display: inline-block;*/
+/*}/*/
+.scroll-button-left,
+.scroll-button-left:before,.scroll-button-right,
+.scroll-button-right:before{
+  font-size:16px !important;
+}
+.farm-container h3{
+	color: #474747;
+}
+.farm-img {
+	-webkit-border-radius: 50px;
+	-moz-border-radius: 50px;
+	border-radius: 50px;
+}
+.product-preview {
+	width: 50px;
+	height: 50px;
+	margin-left: 2px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	/*float:left; desktop only*/
+	display: inline-block;
+	white-space: normal;
+}
+/*
+	CART PAGE
+*/
+.cart-remind {
+	color:#474747;
+	font-size: 18px;
+	text-align: center;
+}
+.cart-form-container {
+	max-width: 500px;
+	text-align: center;
+	background-color: #efefef;
+	/*margin: 10px;*/
+	padding: 10px;
+	display: block;
+    margin: auto;
+    margin-bottom: 20px;
+}
+/*.cart-form-container input{
+	max-width: 100px;
+}*/
+.cart-form{
+	/*max-width: 400px;*/
+}
+/*
+	SPLASH 2
+*/
+/*body{
+	margin:0;
+	background: url(../img/splash_bg.png) center center fixed;
+	background-repeat: no-repeat;
+	-webkit-background-size:cover;
+	-moz-background-size:cover;
+	-o-background-size:cover;
+	background-size:cover;
+	font-family: 'Lato', sans-serif;
+}*/
+
+
+.splash{
+	margin:0;
+	/*background: url(../img/splash_bg.png) center center fixed;
+	background-repeat: repeat;
+	-webkit-background-size:cover;
+	-moz-background-size:cover;
+	-o-background-size:cover;
+	background-size:cover;*/
+	font-family: 'Lato', sans-serif;
+	height: 10vh;
+	
+	/*padding-right: 2em;*/
+	/*padding-left: 2em;*/
+	text-align: center;
+	z-index: 100;
+}
+
+.splash h1{
+	font-size: 7.2vw;
+	display: block;
+	font-weight: 900;
+	color: white;
+	padding: 0;
+	margin-top:0;
+	margin-bottom: 0.05em;
+	text-transform:uppercase;
+}
+
+.splash img{
+	margin-top:2vh;
+	height: 40vh;
+}
+
+.splash p {
+	font-family: 'Caveat', cursive;
+	font-size: 3.75vw;
+	font-weight: bold;
+	color: white;
+	padding: 0;
+	margin: 0;
+
+}
+
+.splash-button {
+  -webkit-border-radius: 5;
+  -moz-border-radius: 5;
+  border-radius: 5px;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 2vw;
+  font-weight: bold;
+  background: #10c3e3;
+  padding: 0.8em 1em;
+  border: none;
+  text-decoration: none;
+  margin-top: 5vh;
+}
+
+.splash-button:hover {
+  background: #3bd9f5;
+  text-decoration: none;
+}
+
+#about h2{
+	font-size: 1em;
+	font-weight:300;
+	color: white;
+	text-align:center;
+}
+
+#about{
+	margin-top: 2em;
+}
+
+
+
+#about_info p{
+	font-weight: 50;
+	font-size: 2.2vw;
+	display: none;
+	color: white;	
+}
+@media screen and (max-width: 600px) { /* Specific to this particular image */
   #splash-bg {
     left: 50%;
     margin-left: -600px;
@@ -213,5 +475,26 @@
     -ms-transform: rotate(90deg);
     -o-transform: rotate(90deg);
     transform: rotate(90deg);
+    z-index: -1;
   }
+	.splash p {
+		font-size: 24px;
+	}
+	.splash-button {
+	  font-size: 3.5vw;
+	}
+	a.home-genre-item {
+		margin: 0px;
+	}
+	a.home-genre-item img {
+		position: relative;
+		top: 0%;
+		transform: translateY(0%);
+	}
+	.genre-product-img {
+		margin-top: 0px;
+		position: relative;
+		top: 0%;
+		transform: translateY(0%);
+	}
 }
