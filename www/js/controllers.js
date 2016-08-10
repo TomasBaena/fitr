@@ -16,6 +16,8 @@ angular.module('starter.controllers', ['ionic','starter.services'])
 	   }
 	$scope.$on("$ionicView.enter", function(event, data){
 		$scope.cart = JSON.parse(cartServices.getCart());
+		ga('set', 'page', '/genre/'+$scope.genre+'.html');
+		ga('send', 'pageview');
 	});
 	$scope.selectProduct = function(index){
 		if($scope.products[index].selected==false){
@@ -45,7 +47,26 @@ angular.module('starter.controllers', ['ionic','starter.services'])
 		localStorage["productsInfo"]=null;
 	}
 	$scope.$on("$ionicView.enter", function(event, data){
+		if(window.innerWidth <= 900 && window.innerHeight <= 700) {
+			$scope.mobile = true;
+		} else {
+			$scope.mobile = false;
+		}
 		$scope.cart = JSON.parse(cartServices.getCart());
+		ga('set', 'page', '/home.html');
+		ga('send', 'pageview');
+		
+	});
+	$scope.gotoCart = function(){
+		$state.go('cart');
+	}
+	
+})
+.controller("AboutCtrl",function($scope,cartServices,$state){
+	$scope.$on("$ionicView.enter", function(event, data){
+		$scope.cart = JSON.parse(cartServices.getCart());
+		ga('set', 'page', '/abousus.html');
+		ga('send', 'pageview');
 	});
 	$scope.gotoCart = function(){
 		$state.go('cart');
@@ -68,12 +89,196 @@ angular.module('starter.controllers', ['ionic','starter.services'])
 	weekday[5] = "Friday";
 	weekday[6] = "Saturday";
 	$scope.doftw = weekday[today.getDay()];
+	$scope.doftw_num = today.getDay();
 	$scope.$on("$ionicView.enter", function(event, data){
+		ga('set', 'page', '/Farms.html');
+		ga('send', 'pageview');
+		if(window.innerWidth <= 700) {
+			$scope.mobile = true;
+		} else {
+			$scope.mobile = false;
+		}
 	   	$scope.cart = JSON.parse(cartServices.getCart());
 	   	$scope.searchList = cartServices.getSearchList();
 		$scope.farms = JSON.parse(cartServices.getFarms());
+		var current_hours = today.getHours();
+		var current_minutes = today.getMinutes();
 		for (i = 0;i<$scope.farms.length;i++){
-			$scope.farms[i].hours = $scope.farms[i][$scope.doftw];
+			if ($scope.farms[i][$scope.doftw].charAt(0) >= '0' && $scope.farms[i][$scope.doftw].charAt(0) <= '9'){
+				var hourInfo = $scope.formatHours($scope.farms[i][$scope.doftw]);
+				$scope.farms[i].hours = hourInfo[0];
+				if (hourInfo[1]=="Closed"){
+					var split = $scope.farms[i][$scope.doftw].split("-");
+					var first = split[0].split(":");
+					var start_hours = parseInt(first[0]);
+					var start_minutes = parseInt(first[1]);
+					if(current_hours<start_hours){
+						$scope.farms[i].status = "Closed - Open later today";
+					}else if(current_hours==start_hours && current_minutes<start_minutes){
+						$scope.farms[i].status = "Closed - Open later today";
+					}else if ($scope.doftw_num==0){
+						// if 
+						if ($scope.farms[i][weekday[1]].charAt(0) >= '0' && $scope.farms[i][weekday[1]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[1]],weekday[1]);
+						}else if($scope.farms[i][weekday[2]].charAt(0) >= '0' && $scope.farms[i][weekday[2]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[2]],weekday[2]);
+						}else if($scope.farms[i][weekday[3]].charAt(0) >= '0' && $scope.farms[i][weekday[3]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[3]],weekday[3]);
+						}else if($scope.farms[i][weekday[4]].charAt(0) >= '0' && $scope.farms[i][weekday[4]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[4]],weekday[4]);
+						}
+					}else if($scope.doftw_num==1){
+						if ($scope.farms[i][weekday[2]].charAt(0) >= '0' && $scope.farms[i][weekday[2]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[2]],weekday[2]);
+						}else if($scope.farms[i][weekday[3]].charAt(0) >= '0' && $scope.farms[i][weekday[3]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[3]],weekday[3]);
+						}else if($scope.farms[i][weekday[4]].charAt(0) >= '0' && $scope.farms[i][weekday[4]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[4]],weekday[4]);
+						}else if($scope.farms[i][weekday[5]].charAt(0) >= '0' && $scope.farms[i][weekday[5]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[5]],weekday[5]);
+						}
+					}else if($scope.doftw_num==2){
+						if ($scope.farms[i][weekday[3]].charAt(0) >= '0' && $scope.farms[i][weekday[3]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[3]],weekday[3]);
+						}else if($scope.farms[i][weekday[4]].charAt(0) >= '0' && $scope.farms[i][weekday[4]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[4]],weekday[4]);
+						}else if($scope.farms[i][weekday[5]].charAt(0) >= '0' && $scope.farms[i][weekday[5]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[5]],weekday[5]);
+						}else if($scope.farms[i][weekday[6]].charAt(0) >= '0' && $scope.farms[i][weekday[6]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[6]],weekday[6]);
+						}
+					}else if($scope.doftw_num==3){
+						if ($scope.farms[i][weekday[4]].charAt(0) >= '0' && $scope.farms[i][weekday[4]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[4]],weekday[4]);
+						}else if($scope.farms[i][weekday[5]].charAt(0) >= '0' && $scope.farms[i][weekday[5]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[5]],weekday[5]);
+						}else if($scope.farms[i][weekday[6]].charAt(0) >= '0' && $scope.farms[i][weekday[6]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[6]],weekday[6]);
+						}else if($scope.farms[i][weekday[0]].charAt(0) >= '0' && $scope.farms[i][weekday[0]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[0]],weekday[0]);
+						}
+					}else if($scope.doftw_num==4){
+						if ($scope.farms[i][weekday[5]].charAt(0) >= '0' && $scope.farms[i][weekday[5]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[5]],weekday[5]);
+						}else if($scope.farms[i][weekday[6]].charAt(0) >= '0' && $scope.farms[i][weekday[6]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[6]],weekday[6]);
+						}else if($scope.farms[i][weekday[0]].charAt(0) >= '0' && $scope.farms[i][weekday[0]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[0]],weekday[0]);
+						}else if($scope.farms[i][weekday[1]].charAt(0) >= '0' && $scope.farms[i][weekday[1]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[1]],weekday[1]);
+						}
+					}else if($scope.doftw_num==5){
+						if ($scope.farms[i][weekday[6]].charAt(0) >= '0' && $scope.farms[i][weekday[6]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[6]],weekday[6]);
+						}else if($scope.farms[i][weekday[0]].charAt(0) >= '0' && $scope.farms[i][weekday[0]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[0]],weekday[0]);
+						}else if($scope.farms[i][weekday[1]].charAt(0) >= '0' && $scope.farms[i][weekday[1]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[1]],weekday[1]);
+						}else if($scope.farms[i][weekday[2]].charAt(0) >= '0' && $scope.farms[i][weekday[2]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[2]],weekday[2]);
+						}
+					}else if($scope.doftw_num==6){
+						if ($scope.farms[i][weekday[0]].charAt(0) >= '0' && $scope.farms[i][weekday[0]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[0]],weekday[0]);
+						}else if($scope.farms[i][weekday[1]].charAt(0) >= '0' && $scope.farms[i][weekday[1]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[1]],weekday[1]);
+						}else if($scope.farms[i][weekday[2]].charAt(0) >= '0' && $scope.farms[i][weekday[2]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[2]],weekday[2]);
+						}else if($scope.farms[i][weekday[3]].charAt(0) >= '0' && $scope.farms[i][weekday[3]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[3]],weekday[3]);
+						}
+					}
+				}else{
+					$scope.farms[i].status = hourInfo[1];
+				}
+			}else{
+				if ($scope.farms[i][$scope.doftw]=="Closed"){
+					var split = $scope.farms[i][$scope.doftw].split("-");
+					var first = split[0].split(":");
+					var start_hours = parseInt(first[0]);
+					var start_minutes = parseInt(first[1]);
+					if(current_hours<start_hours){
+						$scope.farms[i].status = "Closed - Open later today";
+					}else if(current_hours==start_hours && current_minutes<start_minutes){
+						$scope.farms[i].status = "Closed - Open later today";
+					}else if ($scope.doftw_num==0){
+						// if 
+						if ($scope.farms[i][weekday[1]].charAt(0) >= '0' && $scope.farms[i][weekday[1]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[1]],weekday[1]);
+						}else if($scope.farms[i][weekday[2]].charAt(0) >= '0' && $scope.farms[i][weekday[2]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[2]],weekday[2]);
+						}else if($scope.farms[i][weekday[3]].charAt(0) >= '0' && $scope.farms[i][weekday[3]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[3]],weekday[3]);
+						}else if($scope.farms[i][weekday[4]].charAt(0) >= '0' && $scope.farms[i][weekday[4]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[4]],weekday[4]);
+						}
+					}else if($scope.doftw_num==1){
+						if ($scope.farms[i][weekday[2]].charAt(0) >= '0' && $scope.farms[i][weekday[2]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[2]],weekday[2]);
+						}else if($scope.farms[i][weekday[3]].charAt(0) >= '0' && $scope.farms[i][weekday[3]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[3]],weekday[3]);
+						}else if($scope.farms[i][weekday[4]].charAt(0) >= '0' && $scope.farms[i][weekday[4]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[4]],weekday[4]);
+						}else if($scope.farms[i][weekday[5]].charAt(0) >= '0' && $scope.farms[i][weekday[5]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[5]],weekday[5]);
+						}
+					}else if($scope.doftw_num==2){
+						if ($scope.farms[i][weekday[3]].charAt(0) >= '0' && $scope.farms[i][weekday[3]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[3]],weekday[3]);
+						}else if($scope.farms[i][weekday[4]].charAt(0) >= '0' && $scope.farms[i][weekday[4]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[4]],weekday[4]);
+						}else if($scope.farms[i][weekday[5]].charAt(0) >= '0' && $scope.farms[i][weekday[5]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[5]],weekday[5]);
+						}else if($scope.farms[i][weekday[6]].charAt(0) >= '0' && $scope.farms[i][weekday[6]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[6]],weekday[6]);
+						}
+					}else if($scope.doftw_num==3){
+						if ($scope.farms[i][weekday[4]].charAt(0) >= '0' && $scope.farms[i][weekday[4]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[4]],weekday[4]);
+						}else if($scope.farms[i][weekday[5]].charAt(0) >= '0' && $scope.farms[i][weekday[5]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[5]],weekday[5]);
+						}else if($scope.farms[i][weekday[6]].charAt(0) >= '0' && $scope.farms[i][weekday[6]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[6]],weekday[6]);
+						}else if($scope.farms[i][weekday[0]].charAt(0) >= '0' && $scope.farms[i][weekday[0]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[0]],weekday[0]);
+						}
+					}else if($scope.doftw_num==4){
+						if ($scope.farms[i][weekday[5]].charAt(0) >= '0' && $scope.farms[i][weekday[5]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[5]],weekday[5]);
+						}else if($scope.farms[i][weekday[6]].charAt(0) >= '0' && $scope.farms[i][weekday[6]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[6]],weekday[6]);
+						}else if($scope.farms[i][weekday[0]].charAt(0) >= '0' && $scope.farms[i][weekday[0]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[0]],weekday[0]);
+						}else if($scope.farms[i][weekday[1]].charAt(0) >= '0' && $scope.farms[i][weekday[1]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[1]],weekday[1]);
+						}
+					}else if($scope.doftw_num==5){
+						if ($scope.farms[i][weekday[6]].charAt(0) >= '0' && $scope.farms[i][weekday[6]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[6]],weekday[6]);
+						}else if($scope.farms[i][weekday[0]].charAt(0) >= '0' && $scope.farms[i][weekday[0]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[0]],weekday[0]);
+						}else if($scope.farms[i][weekday[1]].charAt(0) >= '0' && $scope.farms[i][weekday[1]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[1]],weekday[1]);
+						}else if($scope.farms[i][weekday[2]].charAt(0) >= '0' && $scope.farms[i][weekday[2]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[2]],weekday[2]);
+						}
+					}else if($scope.doftw_num==6){
+						if ($scope.farms[i][weekday[0]].charAt(0) >= '0' && $scope.farms[i][weekday[0]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[0]],weekday[0]);
+						}else if($scope.farms[i][weekday[1]].charAt(0) >= '0' && $scope.farms[i][weekday[1]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[1]],weekday[1]);
+						}else if($scope.farms[i][weekday[2]].charAt(0) >= '0' && $scope.farms[i][weekday[2]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[2]],weekday[2]);
+						}else if($scope.farms[i][weekday[3]].charAt(0) >= '0' && $scope.farms[i][weekday[3]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[3]],weekday[3]);
+						}
+					}
+				}else{
+					$scope.farms[i].hours = $scope.farms[i][$scope.doftw];
+				}	
+			}
+			
+			// $scope.farms[i].open = 
 			$scope.farms[i].call = "tel:"+$scope.farms[i].Phone;
 			var found = false;
 			for (e=0;e<$scope.cart.length;e++){
@@ -88,6 +293,98 @@ angular.module('starter.controllers', ['ionic','starter.services'])
 			}
 		}
 	})
+	$scope.formatHoursB = function(hours,day) {
+		var status = "Closed - Opens again "+day+" - ";
+		var split = hours.split("-");
+		var first = split[0].split(":");
+		var firstA = parseInt(first[0]);
+		var firstB = first[1];
+		var second = split[1].split(":");
+		var secondA = parseInt(second[0]);
+		var secondB = second[1];
+		//format hours
+		if (firstA>=12){
+			if (firstA==12){
+				status=status+"12:"+firstB+"pm";
+			}else{
+				status=status+(firstA-12)+":"+firstB+"pm";
+			}
+		}else{
+			if(firstA==0){
+				status=status+"12:"+firstB+"am";
+			}else{
+				status=status+firstA+":"+firstB+"am";
+			}
+			
+		}
+		status=status+"-";
+		if (secondA>=12){
+			if (secondA==12){
+				status=status+"12:"+secondB+"pm";
+			}else{
+				status=status+(secondA-12)+":"+secondB+"pm";
+			}
+		}else{
+			if(secondA==0){
+				status=status+"12:"+secondB+"am";
+			}else{
+				status=status+secondA+":"+secondB+"am";
+			}
+		}
+		return status;
+	}
+	$scope.formatHours = function(hours) {
+		var today = new Date();
+		var status = "Closed";
+		var split = hours.split("-");
+		var first = split[0].split(":");
+		var firstA = parseInt(first[0]);
+		var firstB = first[1];
+		var second = split[1].split(":");
+		var secondA = parseInt(second[0]);
+		var secondB = second[1];
+		//status
+		if (today.getHours()>firstA && today.getHours() <secondA){
+			status = "Open"
+		}else if (today.getHours()==firstA){
+			if (today.getMinutes()>parseInt(firstB)){
+				status = "Open";
+			}
+		}else if(today.getHours()==secondA){
+			if (today.getMinutes()<parseInt(secondB)){
+				status = "Open";
+			}
+		}
+		//format hours
+		if (firstA>=12){
+			if (firstA==12){
+				newHours="12:"+firstB+"pm";
+			}else{
+				newHours=(firstA-12)+":"+firstB+"pm";
+			}
+		}else{
+			if(firstA==0){
+				newHours="12:"+firstB+"am";
+			}else{
+				newHours=firstA+":"+firstB+"am";
+			}
+		}
+		newHours=newHours+"-";
+		if (secondA>=12){
+			if (secondA==12){
+				newHours=newHours+"12:"+secondB+"pm";
+			}else{
+				newHours=newHours+(secondA-12)+":"+secondB+"pm";
+			}
+		}else{
+			if(secondA==0){
+				newHours=newHours+"12:"+secondB+"am";
+			}else{
+				newHours=newHours+secondA+":"+secondB+"am";
+			}
+		}
+		return [newHours,status];
+	}
 	$scope.scrollLeft = function(index){
 		var id = "#farm-product-container-"+index;
 		$(id).scrollLeft($(id).scrollLeft()-70);
@@ -100,7 +397,7 @@ angular.module('starter.controllers', ['ionic','starter.services'])
 		///Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
 		var urlTemplates = {
             "default": "http://maps.google.com?q= "+$scope.farms[index].Address+" "+$scope.farms[index].Town+" Ontario Canada",
-            "ios": "maps:?saddr=Current Location&daddr={streetAddress} {addressLocality} {addressRegion} {postalCode} {addressCountry}",
+            "ios": "maps:?saddr=Current Location&daddr= "+$scope.farms[index].Address+" "+$scope.farms[index].Town+" Ontario Canada",
             "android": "geo:"+$scope.farms[index].Address+" "+$scope.farms[index].Town+" Ontario Canada",
             "windows_phone7": "maps:"+$scope.farms[index].Address+" "+$scope.farms[index].Town+" Ontario Canada",
             "windows_phone8": "bingmaps:?where="+$scope.farms[index].Address+" "+$scope.farms[index].Town+" Ontario Canada",
@@ -152,11 +449,192 @@ angular.module('starter.controllers', ['ionic','starter.services'])
 	$scope.doftw = weekday[today.getDay()];
 	$scope.emailDetails = {};
 	$scope.$on("$ionicView.enter", function(event, data){
+		ga('set', 'page', '/Cart.html');
+		ga('send', 'pageview');
+		if(window.innerWidth <= 700) {
+			$scope.mobile = true;
+		} else {
+			$scope.mobile = false;
+		}
 	   	$scope.cart = JSON.parse(cartServices.getCart());
 		$scope.farms = JSON.parse(cartServices.getPotentialCart());
 		$scope.searchList = cartServices.getSearchList();
+		var current_hours = today.getHours();
+		var current_minutes = today.getMinutes();
 		for (i = 0;i<$scope.farms.length;i++){
-			$scope.farms[i].hours = $scope.farms[i][$scope.doftw];
+			if ($scope.farms[i][$scope.doftw].charAt(0) >= '0' && $scope.farms[i][$scope.doftw].charAt(0) <= '9'){
+				var hourInfo = $scope.formatHours($scope.farms[i][$scope.doftw]);
+				$scope.farms[i].hours = hourInfo[0];
+				if (hourInfo[1]=="Closed"){
+					var split = $scope.farms[i][$scope.doftw].split("-");
+					var first = split[0].split(":");
+					var start_hours = parseInt(first[0]);
+					var start_minutes = parseInt(first[1]);
+					if(current_hours<start_hours){
+						$scope.farms[i].status = "Closed - Open later today";
+					}else if(current_hours==start_hours && current_minutes<start_minutes){
+						$scope.farms[i].status = "Closed - Open later today";
+					}else if ($scope.doftw_num==0){
+						// if 
+						if ($scope.farms[i][weekday[1]].charAt(0) >= '0' && $scope.farms[i][weekday[1]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[1]],weekday[1]);
+						}else if($scope.farms[i][weekday[2]].charAt(0) >= '0' && $scope.farms[i][weekday[2]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[2]],weekday[2]);
+						}else if($scope.farms[i][weekday[3]].charAt(0) >= '0' && $scope.farms[i][weekday[3]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[3]],weekday[3]);
+						}else if($scope.farms[i][weekday[4]].charAt(0) >= '0' && $scope.farms[i][weekday[4]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[4]],weekday[4]);
+						}
+					}else if($scope.doftw_num==1){
+						if ($scope.farms[i][weekday[2]].charAt(0) >= '0' && $scope.farms[i][weekday[2]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[2]],weekday[2]);
+						}else if($scope.farms[i][weekday[3]].charAt(0) >= '0' && $scope.farms[i][weekday[3]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[3]],weekday[3]);
+						}else if($scope.farms[i][weekday[4]].charAt(0) >= '0' && $scope.farms[i][weekday[4]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[4]],weekday[4]);
+						}else if($scope.farms[i][weekday[5]].charAt(0) >= '0' && $scope.farms[i][weekday[5]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[5]],weekday[5]);
+						}
+					}else if($scope.doftw_num==2){
+						if ($scope.farms[i][weekday[3]].charAt(0) >= '0' && $scope.farms[i][weekday[3]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[3]],weekday[3]);
+						}else if($scope.farms[i][weekday[4]].charAt(0) >= '0' && $scope.farms[i][weekday[4]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[4]],weekday[4]);
+						}else if($scope.farms[i][weekday[5]].charAt(0) >= '0' && $scope.farms[i][weekday[5]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[5]],weekday[5]);
+						}else if($scope.farms[i][weekday[6]].charAt(0) >= '0' && $scope.farms[i][weekday[6]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[6]],weekday[6]);
+						}
+					}else if($scope.doftw_num==3){
+						if ($scope.farms[i][weekday[4]].charAt(0) >= '0' && $scope.farms[i][weekday[4]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[4]],weekday[4]);
+						}else if($scope.farms[i][weekday[5]].charAt(0) >= '0' && $scope.farms[i][weekday[5]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[5]],weekday[5]);
+						}else if($scope.farms[i][weekday[6]].charAt(0) >= '0' && $scope.farms[i][weekday[6]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[6]],weekday[6]);
+						}else if($scope.farms[i][weekday[0]].charAt(0) >= '0' && $scope.farms[i][weekday[0]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[0]],weekday[0]);
+						}
+					}else if($scope.doftw_num==4){
+						if ($scope.farms[i][weekday[5]].charAt(0) >= '0' && $scope.farms[i][weekday[5]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[5]],weekday[5]);
+						}else if($scope.farms[i][weekday[6]].charAt(0) >= '0' && $scope.farms[i][weekday[6]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[6]],weekday[6]);
+						}else if($scope.farms[i][weekday[0]].charAt(0) >= '0' && $scope.farms[i][weekday[0]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[0]],weekday[0]);
+						}else if($scope.farms[i][weekday[1]].charAt(0) >= '0' && $scope.farms[i][weekday[1]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[1]],weekday[1]);
+						}
+					}else if($scope.doftw_num==5){
+						if ($scope.farms[i][weekday[6]].charAt(0) >= '0' && $scope.farms[i][weekday[6]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[6]],weekday[6]);
+						}else if($scope.farms[i][weekday[0]].charAt(0) >= '0' && $scope.farms[i][weekday[0]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[0]],weekday[0]);
+						}else if($scope.farms[i][weekday[1]].charAt(0) >= '0' && $scope.farms[i][weekday[1]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[1]],weekday[1]);
+						}else if($scope.farms[i][weekday[2]].charAt(0) >= '0' && $scope.farms[i][weekday[2]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[2]],weekday[2]);
+						}
+					}else if($scope.doftw_num==6){
+						if ($scope.farms[i][weekday[0]].charAt(0) >= '0' && $scope.farms[i][weekday[0]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[0]],weekday[0]);
+						}else if($scope.farms[i][weekday[1]].charAt(0) >= '0' && $scope.farms[i][weekday[1]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[1]],weekday[1]);
+						}else if($scope.farms[i][weekday[2]].charAt(0) >= '0' && $scope.farms[i][weekday[2]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[2]],weekday[2]);
+						}else if($scope.farms[i][weekday[3]].charAt(0) >= '0' && $scope.farms[i][weekday[3]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[3]],weekday[3]);
+						}
+					}
+				}else{
+					$scope.farms[i].status = hourInfo[1];
+				}
+			}else{
+				if ($scope.farms[i][$scope.doftw]=="Closed"){
+					var split = $scope.farms[i][$scope.doftw].split("-");
+					var first = split[0].split(":");
+					var start_hours = parseInt(first[0]);
+					var start_minutes = parseInt(first[1]);
+					if(current_hours<start_hours){
+						$scope.farms[i].status = "Closed - Open later today";
+					}else if(current_hours==start_hours && current_minutes<start_minutes){
+						$scope.farms[i].status = "Closed - Open later today";
+					}else if ($scope.doftw_num==0){
+						// if 
+						if ($scope.farms[i][weekday[1]].charAt(0) >= '0' && $scope.farms[i][weekday[1]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[1]],weekday[1]);
+						}else if($scope.farms[i][weekday[2]].charAt(0) >= '0' && $scope.farms[i][weekday[2]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[2]],weekday[2]);
+						}else if($scope.farms[i][weekday[3]].charAt(0) >= '0' && $scope.farms[i][weekday[3]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[3]],weekday[3]);
+						}else if($scope.farms[i][weekday[4]].charAt(0) >= '0' && $scope.farms[i][weekday[4]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[4]],weekday[4]);
+						}
+					}else if($scope.doftw_num==1){
+						if ($scope.farms[i][weekday[2]].charAt(0) >= '0' && $scope.farms[i][weekday[2]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[2]],weekday[2]);
+						}else if($scope.farms[i][weekday[3]].charAt(0) >= '0' && $scope.farms[i][weekday[3]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[3]],weekday[3]);
+						}else if($scope.farms[i][weekday[4]].charAt(0) >= '0' && $scope.farms[i][weekday[4]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[4]],weekday[4]);
+						}else if($scope.farms[i][weekday[5]].charAt(0) >= '0' && $scope.farms[i][weekday[5]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[5]],weekday[5]);
+						}
+					}else if($scope.doftw_num==2){
+						if ($scope.farms[i][weekday[3]].charAt(0) >= '0' && $scope.farms[i][weekday[3]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[3]],weekday[3]);
+						}else if($scope.farms[i][weekday[4]].charAt(0) >= '0' && $scope.farms[i][weekday[4]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[4]],weekday[4]);
+						}else if($scope.farms[i][weekday[5]].charAt(0) >= '0' && $scope.farms[i][weekday[5]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[5]],weekday[5]);
+						}else if($scope.farms[i][weekday[6]].charAt(0) >= '0' && $scope.farms[i][weekday[6]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[6]],weekday[6]);
+						}
+					}else if($scope.doftw_num==3){
+						if ($scope.farms[i][weekday[4]].charAt(0) >= '0' && $scope.farms[i][weekday[4]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[4]],weekday[4]);
+						}else if($scope.farms[i][weekday[5]].charAt(0) >= '0' && $scope.farms[i][weekday[5]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[5]],weekday[5]);
+						}else if($scope.farms[i][weekday[6]].charAt(0) >= '0' && $scope.farms[i][weekday[6]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[6]],weekday[6]);
+						}else if($scope.farms[i][weekday[0]].charAt(0) >= '0' && $scope.farms[i][weekday[0]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[0]],weekday[0]);
+						}
+					}else if($scope.doftw_num==4){
+						if ($scope.farms[i][weekday[5]].charAt(0) >= '0' && $scope.farms[i][weekday[5]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[5]],weekday[5]);
+						}else if($scope.farms[i][weekday[6]].charAt(0) >= '0' && $scope.farms[i][weekday[6]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[6]],weekday[6]);
+						}else if($scope.farms[i][weekday[0]].charAt(0) >= '0' && $scope.farms[i][weekday[0]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[0]],weekday[0]);
+						}else if($scope.farms[i][weekday[1]].charAt(0) >= '0' && $scope.farms[i][weekday[1]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[1]],weekday[1]);
+						}
+					}else if($scope.doftw_num==5){
+						if ($scope.farms[i][weekday[6]].charAt(0) >= '0' && $scope.farms[i][weekday[6]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[6]],weekday[6]);
+						}else if($scope.farms[i][weekday[0]].charAt(0) >= '0' && $scope.farms[i][weekday[0]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[0]],weekday[0]);
+						}else if($scope.farms[i][weekday[1]].charAt(0) >= '0' && $scope.farms[i][weekday[1]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[1]],weekday[1]);
+						}else if($scope.farms[i][weekday[2]].charAt(0) >= '0' && $scope.farms[i][weekday[2]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[2]],weekday[2]);
+						}
+					}else if($scope.doftw_num==6){
+						if ($scope.farms[i][weekday[0]].charAt(0) >= '0' && $scope.farms[i][weekday[0]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[0]],weekday[0]);
+						}else if($scope.farms[i][weekday[1]].charAt(0) >= '0' && $scope.farms[i][weekday[1]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[1]],weekday[1]);
+						}else if($scope.farms[i][weekday[2]].charAt(0) >= '0' && $scope.farms[i][weekday[2]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[2]],weekday[2]);
+						}else if($scope.farms[i][weekday[3]].charAt(0) >= '0' && $scope.farms[i][weekday[3]].charAt(0) <= '9'){
+							$scope.farms[i].status = $scope.formatHoursB($scope.farms[i][weekday[3]],weekday[3]);
+						}
+					}
+				}else{
+					$scope.farms[i].hours = $scope.farms[i][$scope.doftw];
+				}	
+			}
 			$scope.farms[i].call = "tel:"+$scope.farms[i].Phone;
 			var found = false;
 			for (e=0;e<$scope.cart.length;e++){
@@ -170,6 +648,10 @@ angular.module('starter.controllers', ['ionic','starter.services'])
 				$scope.farms[i].selected = false;
 			}
 		}
+
+
+
+
 		for (i=0;i<$scope.cart.length;i++){
 			var found = false;
 			for (e=0;e<$scope.farms.length;e++){
@@ -183,11 +665,12 @@ angular.module('starter.controllers', ['ionic','starter.services'])
 			}
 		}
 	})
+
 	$scope.openMaps = function(index){
 		///Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
 		var urlTemplates = {
             "default": "http://maps.google.com?q= "+$scope.farms[index].Address+" "+$scope.farms[index].Town+" Ontario Canada",
-            "ios": "maps:?saddr=Current Location&daddr={streetAddress} {addressLocality} {addressRegion} {postalCode} {addressCountry}",
+            "ios": "maps:?saddr=Current Location&daddr= "+$scope.farms[index].Address+" "+$scope.farms[index].Town+" Ontario Canada",
             "android": "geo:"+$scope.farms[index].Address+" "+$scope.farms[index].Town+" Ontario Canada",
             "windows_phone7": "maps:"+$scope.farms[index].Address+" "+$scope.farms[index].Town+" Ontario Canada",
             "windows_phone8": "bingmaps:?where="+$scope.farms[index].Address+" "+$scope.farms[index].Town+" Ontario Canada",
@@ -203,6 +686,98 @@ angular.module('starter.controllers', ['ionic','starter.services'])
 		}else{
 			window.open(urlTemplates.default , '_system');
 		}
+	}
+	$scope.formatHoursB = function(hours,day) {
+		var status = "Closed - Opens again "+day+" - ";
+		var split = hours.split("-");
+		var first = split[0].split(":");
+		var firstA = parseInt(first[0]);
+		var firstB = first[1];
+		var second = split[1].split(":");
+		var secondA = parseInt(second[0]);
+		var secondB = second[1];
+		//format hours
+		if (firstA>=12){
+			if (firstA==12){
+				status=status+"12:"+firstB+"pm";
+			}else{
+				status=status+(firstA-12)+":"+firstB+"pm";
+			}
+		}else{
+			if(firstA==0){
+				status=status+"12:"+firstB+"am";
+			}else{
+				status=status+firstA+":"+firstB+"am";
+			}
+			
+		}
+		status=status+"-";
+		if (secondA>=12){
+			if (secondA==12){
+				status=status+"12:"+secondB+"pm";
+			}else{
+				status=status+(secondA-12)+":"+secondB+"pm";
+			}
+		}else{
+			if(secondA==0){
+				status=status+"12:"+secondB+"am";
+			}else{
+				status=status+secondA+":"+secondB+"am";
+			}
+		}
+		return status;
+	}
+	$scope.formatHours = function(hours) {
+		var today = new Date();
+		var status = "Closed";
+		var split = hours.split("-");
+		var first = split[0].split(":");
+		var firstA = parseInt(first[0]);
+		var firstB = first[1];
+		var second = split[1].split(":");
+		var secondA = parseInt(second[0]);
+		var secondB = second[1];
+		//status
+		if (today.getHours()>firstA && today.getHours() <secondA){
+			status = "Open"
+		}else if (today.getHours()==firstA){
+			if (today.getMinutes()>parseInt(firstB)){
+				status = "Open";
+			}
+		}else if(today.getHours()==secondA){
+			if (today.getMinutes()<parseInt(secondB)){
+				status = "Open";
+			}
+		}
+		//format hours
+		if (firstA>=12){
+			if (firstA==12){
+				newHours="12:"+firstB+"pm";
+			}else{
+				newHours=(firstA-12)+":"+firstB+"pm";
+			}
+		}else{
+			if(firstA==0){
+				newHours="12:"+firstB+"am";
+			}else{
+				newHours=firstA+":"+firstB+"am";
+			}
+		}
+		newHours=newHours+"-";
+		if (secondA>=12){
+			if (secondA==12){
+				newHours=newHours+"12:"+secondB+"pm";
+			}else{
+				newHours=newHours+(secondA-12)+":"+secondB+"pm";
+			}
+		}else{
+			if(secondA==0){
+				newHours=newHours+"12:"+secondB+"am";
+			}else{
+				newHours=newHours+secondA+":"+secondB+"am";
+			}
+		}
+		return [newHours,status];
 	}
 	$scope.sendEmail = function(){
 		if (!$scope.emailDetails.email || $scope.emailDetails.email==''){
@@ -239,6 +814,14 @@ angular.module('starter.controllers', ['ionic','starter.services'])
 		//             null);                   // Attachment Data
 		//         }
 		// }else{
+			var newPostKey = firebase.database().ref().child('emails').push().key;
+			var updates = {};
+			var postData = {
+				email: $scope.emailDetails.email,
+				date: new Date()
+			}
+  			updates['/emails/' + newPostKey] = postData;
+  			firebase.database().ref().update(updates);
 			var body="&body=";
 			for (i = 0;i<$scope.cart.length;i++){
 				body = body+"Name:%20"+$scope.cart[i].Name+"%0A";

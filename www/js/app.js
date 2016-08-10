@@ -69,4 +69,9 @@ angular.module('starter', ['ionic','starter.controllers','starter.services'])
     templateUrl: 'templates/genre.html',
     controller: 'GenreCtrl'
   })
+  .state('about', {
+    url: '/about',
+    templateUrl: 'templates/aboutus.html',
+    controller: 'AboutCtrl'
+  })
 })

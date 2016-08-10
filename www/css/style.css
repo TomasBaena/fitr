@@ -2,6 +2,9 @@
 body {
 	font-family: 'Lato', sans-serif !important;
 }
+.wrap {
+white-space: normal;
+}
 .light-blue-button, .light-blue-button:active, .light-blue-button:hover{
 	background-color: #7acce3 !important;
 	color: #474747;
@@ -24,6 +27,9 @@ body {
 }
 .border {
 	border: 3px solid #7acce3;
+}
+.about-us-link {
+	text-decoration: none;
 }
 /*
 	OVERWRITE IONIC STYLES
@@ -53,8 +59,72 @@ body {
   font-size: 14px;
 }
 .header-logo {
-	height: 50px;
+	max-height: 50px;
+	max-width: 80px;
+	padding-top: 15px;
 }
+/*
+	ABOUT PAGE
+*/
+#aboutus-page {
+	background: url("../img/fitr-about-background.jpg") no-repeat center center fixed; 
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	padding-top: 30px;
+	padding-bottom: 30px;
+
+}
+#about-us-text {
+	text-align: left;
+	display: inline-block;
+	font-family: 'Lato', sans-serif;
+	font-weight: 400;
+	font-size: 24px;
+	line-height: 40px;
+	padding-left: 100px;
+	padding-right: 100px;
+}
+#about-us-text a {
+	color: #ffffff;
+	font-family: 'Lato', sans-serif !important;
+}
+#splash-logo-about {
+	/*margin-top: 0%;*/
+	width: 50%;
+	height: auto;
+}
+#about-bg {
+  /*height: 100%;*/
+  /*min-width: 1200px;*/
+  width: 100vw;
+  min-height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;  
+  z-index: -1; 
+}
+.about-us-header{
+	color: #ffffff;
+	font-family: 'Lato', sans-serif !important;
+}
+#about-bg {
+  min-height: 100%;
+  min-width: 1200px;
+  width: 100%;
+  height: auto;
+  position: fixed;
+  top: 0;
+  left: 0;  
+  z-index: -1; 
+}
+.about-us-social {
+	color: #ffffff;
+	font-size: 40px;
+	margin-top: 0px;
+}
+
 /*
 	SPLASH PAGE
 */
@@ -69,7 +139,9 @@ body {
   z-index: -1; 
 }
 #splash-logo {
-	max-width: 100%;
+	margin-top: 5%;
+	width: 50%;
+	height: auto;
 }
 #splash-container {
   position: absolute;
@@ -81,6 +153,22 @@ body {
 	max-width: 100%;
 	font-size: 14px;
 	margin-top: 30px;
+}
+#splash-about-us{
+	color: #ffffff;
+	display: block;
+	margin-top: 20px;
+	text-decoration: none;
+	font-size: 24px;
+	font-weight: bold;
+}
+.splash-social {
+	color: #ffffff;
+	font-size: 40px;
+	margin: 10px;
+}
+.splash-social:hover {
+	color:#7acce3;
 }
 /*
 	HOME PAGE
@@ -151,6 +239,14 @@ a.home-genre-item {
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	background-size: cover;
+}
+#list-alcohol {
+	background: url("../img/alcohol/alcohol.jpg") no-repeat center center fixed; 
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	display: block;
 }
 #list-farms {
 	background: url("../img/Farm/farm.jpg") no-repeat center center fixed; 
@@ -275,10 +371,10 @@ a.home-genre-item {
 	border:0px;
 }
 .outter-farm-product-container {
-	max-width:400px;
-    height:50px;
-    overflow-x:hidden;
-    overflow-y: hidden;
+	width: 100%;
+    /*height:auto;*/
+    /*overflow-x:hidden;*/
+    overflow-y: visible;
     /*white-space: nowrap;*/
     padding-left: 25px;
     padding-right: 25px;
@@ -288,10 +384,10 @@ a.home-genre-item {
 	width:100%;
 	margin-left: 0px;
 	margin-right: 0px;
-    height:50px;
-    overflow-x:scroll; /* comment for desktop */
-    overflow-y: hidden;
-    white-space: nowrap;
+    /*height:50px;*/
+    /*overflow-x:scroll;*/
+    /*overflow-y: hidden;*/
+    white-space: normal;
 /*    padding-left: 25px;
     padding-right: 25px;*/
     position: relative;
@@ -304,6 +400,7 @@ a.home-genre-item {
     color: #262626 !important;
     /*float: left;*/
     z-index:12;
+    visibility: hidden;
 }
 .scroll-button-right{
     position: absolute;
@@ -313,6 +410,7 @@ a.home-genre-item {
     color: #262626 !important;
     /*float: left;*/
     z-index:12;
+    visibility: hidden;
 }
 /*.outer-farm-container {*/
 	/*max-width: 50%;*/
@@ -393,7 +491,7 @@ a.home-genre-item {
 	-o-background-size:cover;
 	background-size:cover;*/
 	font-family: 'Lato', sans-serif;
-	height: 10vh;
+	/*height: 10vh;*/
 	
 	/*padding-right: 2em;*/
 	/*padding-left: 2em;*/
@@ -477,8 +575,13 @@ a.home-genre-item {
     transform: rotate(90deg);
     z-index: -1;
   }
+
 	.splash p {
 		font-size: 24px;
+	}
+	#splash-about-us {
+		font-size: 18px;
+		margin-top: 10px;
 	}
 	.splash-button {
 	  font-size: 3.5vw;
@@ -497,4 +600,87 @@ a.home-genre-item {
 		top: 0%;
 		transform: translateY(0%);
 	}
+	#about-us-text {
+		font-size: 16px;
+		line-height: 26px;
+		padding: 30px;
+	}
+	#splash-logo {
+		width: 90%;
+		height: auto;
+		margin-top: 40%;
+	}
+	#splash-logo-about {
+		margin-top: 30%;
+		width: 80%;
+		height: auto;
+	}
+	#about-bg {
+		min-height: 100%;
+		min-width: 1000px;
+		/*width: 100%;*/
+		height: auto;
+		position: absolute;
+		top: 0;
+		left: 0;  
+		left: 50%;
+	    margin-left: -500px;
+	    -webkit-transform: rotate(90deg);
+	    -moz-transform: rotate(90deg);
+	    -ms-transform: rotate(90deg);
+	    -o-transform: rotate(90deg);
+	    transform: rotate(90deg);
+	    z-index: -1;
+	}
+	.outter-farm-product-container {
+	width: 100%;
+    height:50px;
+    overflow-x:hidden;
+    overflow-y: hidden;
+    /*white-space: nowrap;*/
+    padding-left: 25px;
+    padding-right: 25px;
+    position: relative;
+}
+.farm-product-container {
+	width:100%;
+	margin-left: 0px;
+	margin-right: 0px;
+    height:50px;
+    overflow-x:scroll; /* comment for desktop */
+    overflow-y: hidden;
+    white-space: nowrap;
+/*    padding-left: 25px;
+    padding-right: 25px;*/
+    position: relative;
+}
+.scroll-button-left{
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #ffffff !important;
+    color: #262626 !important;
+    /*float: left;*/
+    z-index:12;
+    visibility: visible;
+}
+.scroll-button-right{
+    position: absolute;
+    top: 0;
+  	right: 0;
+    background-color: #ffffff !important;
+    color: #262626 !important;
+    /*float: left;*/
+    z-index:12;
+    visibility: visible;
+}
+/*	.outter-farm-product-container {
+		max-width:400px;
+	    height:50px;
+	    overflow-x:hidden;
+	    overflow-y: hidden;
+	    padding-left: 25px;
+	    padding-right: 25px;
+	    position: relative;
+	}*/
 }

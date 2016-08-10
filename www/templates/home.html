@@ -3,10 +3,14 @@
     </ion-nav-bar>
         <ion-nav-buttons side="left">
       <a href="#/splash" class="button button-icon">
-        <img class="header-logo" src="img/Logo - FITR - July12 black.png">
+        <img class="header-logo" src="img/fitr-logo-final-black.png">
       </a>
     </ion-nav-buttons>
     <ion-nav-title>
+<!--       <button class="button button-icon" ng-click="gotoCart()">
+        About Us
+      </button> -->
+      <a href="#/about" class="about-us-link">About Us</a>
     </ion-nav-title>
     <ion-nav-buttons side="right">
       <button class="button button-icon" ng-click="gotoCart()">
@@ -17,23 +21,33 @@
   <ion-content id="home-page">
     <h4>Explore local farms and unearth goodness.</h4>
       <a class="home-genre-item" href="#/home/Fruits">
-        <img class="genre-header-img" src="img/fruit-md/apricots.jpg">
+        <img ng-show="mobile" class="genre-header-img" src="img/home/apricots2.jpg">
+        <img ng-show="!mobile" class="genre-header-img" src="img/home/apricots2.jpg">
         <p>Fruits</p>
       </a>
       <a class="home-genre-item" href="#/home/Vegetables">
-        <img class="genre-header-img" src="img/vegetables-md/beets.jpg">
+        <img ng-show="mobile" class="genre-header-img" src="img/home/beets.jpg">
+        <img ng-show="!mobile" class="genre-header-img" src="img/home/beets2.jpg">
         <p>Vegetables</p>
       </a>
       <a class="home-genre-item" href="#/home/Meats">
-        <img class="genre-header-img" src="img/meat-md/beef.jpg">
+        <img ng-show="mobile" class="genre-header-img" src="img/home/beef.jpg">
+        <img ng-show="!mobile" class="genre-header-img" src="img/home/beef2.jpg">
         <p>Meats</p>
       </a>
+      <a class="home-genre-item" href="#/home/Alcohol">
+        <img ng-show="mobile" class="genre-header-img" src="img/home/alcohol.jpg">
+        <img ng-show="!mobile" class="genre-header-img" src="img/home/alcohol2.jpg">
+        <p>Alcohol</p>
+      </a>
       <a class="home-genre-item" href="#/home/Other">
-        <img class="genre-header-img" src="img/others-md/eggs2.jpg">
+        <img ng-show="mobile" class="genre-header-img" src="img/others-md/eggs2.jpg">
+        <img ng-show="!mobile" class="genre-header-img" src="img/others-md/eggs2.jpg">
         <p>Other</p>
       </a>
       <a class="home-genre-item" href="#/farms">
-        <img class="genre-header-img" src="img/Farm/farm.jpg">
+        <img ng-show="mobile" class="genre-header-img" src="img/home/farm.jpg">
+        <img ng-show="!mobile" class="genre-header-img" src="img/home/farm2.jpg">
         <p>Farms</p>
       </a>
   </ion-content>

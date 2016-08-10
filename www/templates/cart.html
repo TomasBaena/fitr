@@ -3,10 +3,11 @@
     </ion-nav-bar>
         <ion-nav-buttons side="left">
       <a href="#/home" class="button button-icon">
-        <img class="header-logo" src="img/Logo - FITR - July12 black.png">
+        <img class="header-logo" src="img/fitr-logo-final-black.png">
       </a>
     </ion-nav-buttons>
     <ion-nav-title>
+      <a href="#/about" class="about-us-link">About Us</a>
     </ion-nav-title>
     <ion-nav-buttons side="right">
       <button class="button button-icon">
@@ -25,11 +26,14 @@
     <div class="list">
       <div class="item item-thumbnail-left farm-container" ng-repeat="farm in farms track by $index" ng-click="addToCart($index)">
 
-          <img class="farm-img" src="img/Farm/Farm - Haybails - Unsplash.jpg">
+          <img class="farm-img" src={{farm.Image}}>
           <h3>{{farm.Name}}</h3>
           <p>
             <i class="ion-ios-location-outline"></i><span ng-click="openMaps($index)" style="color:#1e90ff;font-size:12px;"> {{farm['Address']}} ({{farm['Distance (km)']}})</span><br>
-            <i class="ion-ios-clock-outline"></i><span style="color:#474747;font-size:12px;"> {{farm.hours}}</span><br>
+            <i class="ion-ios-clock-outline"></i><span style="color:#474747;font-size:12px;"> {{farm.hours}}
+            <span ng-if="farm.status=='Open'" style="color:green;">{{farm.status}}</span>
+          <span ng-if="farm.status!=null && farm.status!='Open'" style="color:red;" class="wrap">{{farm.status}}</span>
+            </span><br>
             <i class="ion-ios-telephone-outline"></i>
             <a style="text-decoration:none;" href={{farm.call}}><span style="color:#1e90ff;font-size:12px;">{{farm.Phone}}</span></a>
           </p>
@@ -45,7 +49,7 @@
                 <img ng-show="farm['Pears']=='Y'" ng-class="{border: searchList.indexOf('Pears')>-1}" class="product-preview" src="img/fruit/pears.jpg">
                 <img ng-show="farm['Plums']=='Y'" ng-class="{border: searchList.indexOf('Plums')>-1}" class="product-preview" src="img/fruit/plums.jpg">
                 <img ng-show="farm['Raspberries']=='Y'" ng-class="{border: searchList.indexOf('Raspberries')>-1}" class="product-preview" src="img/fruit/raspberries.jpg">
-                <img ng-show="farm['Strawberries']=='Y'" ng-class="{border: searchList.indexOf('Strawberries)>-1}" class="product-preview" src="img/fruit/strawberries.jpg">
+                <img ng-show="farm['Strawberries']=='Y'" ng-class="{border: searchList.indexOf('Strawberries')>-1}" class="product-preview" src="img/fruit/strawberries.jpg">
                 <img ng-show="farm['Watermelon']=='Y'" ng-class="{border: searchList.indexOf('Watermelon')>-1}" class="product-preview" src="img/fruit/watermelon.jpg">
                 <img ng-show="farm['Beans']=='Y'" ng-class="{border: searchList.indexOf('Beans')>-1}" class="product-preview" src="img/vegetables/beans.jpg">
                 <img ng-show="farm['Beets']=='Y'" ng-class="{border: searchList.indexOf('Beets')>-1}" class="product-preview" src="img/vegetables/beets.jpg">
@@ -66,13 +70,11 @@
                 <img ng-show="farm['Tomatoes']=='Y'" ng-class="{border: searchList.indexOf('Tomatoes')>-1}" class="product-preview" src="img/vegetables/tomatoes.jpg">
                 <img ng-show="farm['Zucchini']=='Y'" ng-class="{border: searchList.indexOf('Zucchini')>-1}" class="product-preview" src="img/vegetables/zucchini.jpg">
                 <img ng-show="farm['Apple Cider']=='Y'" ng-class="{border: searchList.indexOf('Apple Cider')>-1}" class="product-preview" src="img/others/apple_cider.jpg">
-                <img ng-show="farm['Beer']=='Y'" ng-class="{border: searchList.indexOf('Beer')>-1}" class="product-preview" src="img/others/beer.jpg">
                 <img ng-show="farm['Cheese']=='Y'" ng-class="{border: searchList.indexOf('Cheese')>-1}" class="product-preview" src="img/others/cheese.jpg">
                 <img ng-show="farm['Eggs']=='Y'" ng-class="{border: searchList.indexOf('Eggs')>-1}" class="product-preview" src="img/others/eggs.jpg">
                 <img ng-show="farm['Honey']=='Y'" ng-class="{border: searchList.indexOf('Honey')>-1}" class="product-preview" src="img/others/honey.jpg">
                 <img ng-show="farm['Jams']=='Y'" ng-class="{border: searchList.indexOf('Jams')>-1}" class="product-preview" src="img/others/jams.jpg">
                 <img ng-show="farm['Maple Syrup']=='Y'" ng-class="{border: searchList.indexOf('Maple Syrup')>-1}" class="product-preview" src="img/others/maple.jpg">
-                <img ng-show="farm['Wine']=='Y'" ng-class="{border: searchList.indexOf('Wine')>-1}" class="product-preview" src="img/others/wine.jpg">
                 <img ng-show="farm['Beef']=='Y'" ng-class="{border: searchList.indexOf('Beef')>-1}" class="product-preview" src="img/meat/beef.jpg">
                 <img ng-show="farm['Chicken']=='Y'" ng-class="{border: searchList.indexOf('Chicken')>-1}" class="product-preview" src="img/meat/chicken.jpg">
                 <img ng-show="farm['Fish']=='Y'" ng-class="{border: searchList.indexOf('Fish')>-1}" class="product-preview" src="img/meat/fish.jpg">
@@ -80,6 +82,9 @@
                 <img ng-show="farm['Pork']=='Y'" ng-class="{border: searchList.indexOf('Pork')>-1}" class="product-preview" src="img/meat-md/pork.jpg">
                 <img ng-show="farm['Sausage']=='Y'" ng-class="{border: searchList.indexOf('Sausage')>-1}" class="product-preview" src="img/meat/sausages.jpg">
                 <img ng-show="farm['Turkey']=='Y'" ng-class="{border: searchList.indexOf('Turkey')>-1}" class="product-preview" src="img/meat/turkey.jpg">
+                <img ng-show="farm['Beer']=='Y'" ng-class="{border: searchList.indexOf('Beer')>-1}" class="product-preview" src="img/alcohol/beer.jpg">
+                <img ng-show="farm['Cider']=='Y'" ng-class="{border: searchList.indexOf('Cider')>-1}" class="product-preview" src="img/alcohol/cider.jpg">
+                <img ng-show="farm['Wine']=='Y'" ng-class="{border: searchList.indexOf('Wine')>-1}" class="product-preview" src="img/alcohol/wine.jpg">
             </div>
             <a ng-show="farm['FARM TOTALS']>3" class="button button-icon icon ion-chevron-right scroll-button-right" ng-click="scrollRight($index);"></a>
           </div>
